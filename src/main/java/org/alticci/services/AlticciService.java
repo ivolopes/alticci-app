@@ -19,23 +19,41 @@ public class AlticciService {
     public List<Integer> get(Integer number) throws AlticciException {
 
         List<Integer> sequences = new ArrayList<>();
-        sequences.add(0);
 
         if (number < 0) {
             throw new AlticciException("The N param should be greater or equal to zero");
         } else {
 
-            for (int i = 1 ; i <= number ; i++) {
-                if (i == 1 || i == 2) {
-                    sequences.add(1);
+            for (int i = 0 ; i <= number ; i++) {
+                if (i < 3) {
+                    sequences.add(getValideValue(i));
                 } else {
-                    Integer result = (i-3) + (i-2);
+                    int calc1 = getValideValue(i-3);
+                    int calc2 = getValideValue(i-2);
+
+                    if (calc1 > 2) {
+                        calc1 = sequences.get(calc1);
+                    }
+
+                    if (calc2 > 2) {
+                        calc2 = sequences.get(calc2);
+                    }
+
+                    int result = calc1 + calc2;
                     sequences.add(result);
                 }
             }
         }
 
         return sequences;
+    }
+
+    private int getValideValue(int value) {
+        if (value == 2) {
+            return 1;
+        } else {
+            return value;
+        }
     }
 
 }
